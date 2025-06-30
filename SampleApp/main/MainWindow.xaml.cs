@@ -1,0 +1,220 @@
+﻿using Com.Microsoft.Multimodal.Clientsdk;
+using Com.Microsoft.Multimodal.Clientsdk.Models;
+using Microsoft.UI.Xaml;
+using Microsoft.UI.Xaml.Controls;
+using Microsoft.UI.Xaml.Media.Imaging;
+using SampleApp.Controls;
+using System;
+using System.Threading.Tasks;
+
+namespace SampleApp
+{
+    public sealed partial class MainWindow : Window
+    {
+
+        public new static MainWindow Current { get; private set; } = null!;
+        private readonly string[] _backgroundImages =
+        {
+            "ms-appx:///Assets/Background/Background1.jpg"
+        };
+        private MultimodalClientSDK _clientSDK;
+        private ChatView _chatView;
+
+        public MultimodalClientSDK ClientSDK => _clientSDK;
+
+        public MainWindow()
+        {
+            this.InitializeComponent();
+            SetRandomBackground();
+
+            Current = this;
+            this.Title = "Client SDK Sample App";
+
+            RootContent.Loaded += RootContent_Loaded;
+        }
+        public void ShowProgressBar()
+        {
+            ProgressRingPanel.Visibility = Visibility.Visible;
+        }
+
+        public void HideProgressBar()
+        {
+            ProgressRingPanel.Visibility = Visibility.Collapsed;
+        }
+
+        private void SetRandomBackground()
+        {
+            var random = new Random();
+            int index = random.Next(_backgroundImages.Length);
+            var image = new BitmapImage(new Uri(_backgroundImages[index]));
+            BackgroundImage.ImageSource = image;
+        }
+
+        private async void RootContent_Loaded(object sender, RoutedEventArgs e)
+        {
+
+            AppConfig config = ConfigManager.LoadConfig();
+
+            if (config == null
+                || string.IsNullOrWhiteSpace(config.AppSettings.AgentSchemaName)
+                || string.IsNullOrWhiteSpace(config.AppSettings.AgentEnvironmentId))
+            {
+                //var (tokenUrl, enableSpeech) = await AskUserForTokenUrlAsync();
+                bool flowControl = await PromptForAgentConfigAsync(config);
+                if (!flowControl)
+                {
+                    return;
+                }
+
+            }
+
+            await LoadChatViewAsync(config);
+        }
+
+        async Task<bool> PromptForAgentConfigAsync(AppConfig? config)
+        {
+            var (AgentSchemaName, EnvironmentName, confirmed) = await AskUserForAgentSchemaAndEnvironmentAsync();
+            if (string.IsNullOrWhiteSpace(AgentSchemaName) || string.IsNullOrEmpty(EnvironmentName))
+            {
+                Application.Current.Exit();
+                return false;
+            }
+
+            config = new AppConfig();
+            config.AppSettings.AgentSchemaName = AgentSchemaName;
+            config.AppSettings.AgentEnvironmentId = EnvironmentName;
+            ConfigManager.SaveConfig(config);
+            return true;
+        }
+
+
+        private async Task<(string TokenUrl, bool EnableSpeech)> AskUserForTokenUrlAsync()
+        {
+            var inputBox = new TextBox { Width = 300 };
+            var speechSwitch = new ToggleSwitch
+            {
+                Header = "Enable Speech",
+                IsOn = false
+            };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Agent Configurations",
+                Content = new StackPanel
+                {
+                    Spacing = 12,
+                    Children =
+                        {
+                            new TextBlock { Text = "Please enter the token URL:" },
+                            inputBox,
+                            speechSwitch
+                        }
+                },
+                PrimaryButtonText = "OK",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = this.Content.XamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+               return (inputBox.Text.Trim(), speechSwitch.IsOn);
+            }
+
+            return (Config.DirectLineTokenUrl, false); // Cancelled
+        }
+
+        private async Task LoadChatViewAsync(AppConfig config)
+        {
+            ShowProgressBar();
+            try
+            {
+                _clientSDK = await MultimodalClientSDK.CreateAsync(config.ClientSDKProperties());
+
+                RootContent.Children.Clear();
+                //User control with chat view
+
+                AgentActivity welcomeMessage = await _clientSDK.GetWelcomeMessageAsync();
+
+                _chatView = new ChatView(config, _clientSDK, welcomeMessage);
+                RootContent.Children.Add(_chatView);
+            }
+            catch (Exception ex)
+            {
+
+                // Optionally log the exception or show a dialog
+                var dialog = new ContentDialog
+                {
+                    Title = "Error",
+                    Content = $"Failed to load chat view: {ex.Message}",
+                    CloseButtonText = "OK",
+                    XamlRoot = this.Content.XamlRoot
+                };
+                await dialog.ShowAsync();
+
+                // Check for 404 status code in InnerException (if it's a web exception)
+                bool is404 = false;
+                if (ex.InnerException is System.Net.Http.HttpRequestException httpEx)
+                {
+                    if (httpEx.StatusCode == System.Net.HttpStatusCode.NotFound)
+                    {
+                        is404 = true;
+                    }
+                }
+                else if (ex.InnerException is System.Net.WebException webEx &&
+                         webEx.Response is System.Net.HttpWebResponse response &&
+                         response.StatusCode == System.Net.HttpStatusCode.NotFound)
+                {
+                    is404 = true;
+                }
+
+                if (is404)
+                {
+                    await PromptForAgentConfigAsync(config);
+                }
+
+            }
+            finally
+            {
+                HideProgressBar();
+            }
+        }
+        private async Task<(string AgentSchemaName, string EnvironmentName, bool Confirmed)> AskUserForAgentSchemaAndEnvironmentAsync()
+        {
+            var agentSchemaBox = new TextBox { Width = 300, PlaceholderText = "Agent Schema Name" };
+            var environmentBox = new TextBox { Width = 300, PlaceholderText = "Environment Name" };
+
+            var dialog = new ContentDialog
+            {
+                Title = "Agent Configuration",
+                Content = new StackPanel
+                {
+                    Spacing = 12,
+                    Children =
+                    {
+                        new TextBlock { Text = "Please enter the Agent Schema Name:" },
+                        agentSchemaBox,
+                        new TextBlock { Text = "Please enter the Environment Name:" },
+                        environmentBox
+                    }
+                },
+                PrimaryButtonText = "OK",
+                CloseButtonText = "Cancel",
+                DefaultButton = ContentDialogButton.Primary,
+                XamlRoot = this.Content.XamlRoot
+            };
+
+            var result = await dialog.ShowAsync();
+
+            if (result == ContentDialogResult.Primary)
+            {
+                return (agentSchemaBox.Text.Trim(), environmentBox.Text.Trim(), true);
+            }
+
+            return (string.Empty, string.Empty, false);
+        }
+    }
+}
+
