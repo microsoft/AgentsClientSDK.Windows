@@ -1,4 +1,4 @@
-﻿using Com.Microsoft.Multimodal.Clientsdk.Models;
+﻿using Com.Microsoft.AgentsClientSDK.Models;
 using Microsoft.UI;
 using Microsoft.UI.Xaml.Data;
 using Microsoft.UI.Xaml.Media;

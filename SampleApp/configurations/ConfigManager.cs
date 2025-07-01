@@ -1,5 +1,5 @@
-using Com.Microsoft.Multimodal.Clientsdk.Config;
-using Com.Microsoft.Multimodal.Clientsdk.Services.Interfaces;
+using Com.Microsoft.AgentsClientSDK.Config;
+using Com.Microsoft.AgentsClientSDK.Services.Interfaces;
 using System;
 using System.IO;
 using System.Text.Json;

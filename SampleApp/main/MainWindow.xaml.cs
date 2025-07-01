@@ -1,5 +1,5 @@
-﻿using Com.Microsoft.Multimodal.Clientsdk;
-using Com.Microsoft.Multimodal.Clientsdk.Models;
+﻿using Com.Microsoft.AgentsClientSDK;
+using Com.Microsoft.AgentsClientSDK.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
@@ -17,10 +17,10 @@ namespace SampleApp
         {
             "ms-appx:///Assets/Background/Background1.jpg"
         };
-        private MultimodalClientSDK _clientSDK;
+        private AgentsClientSDK _clientSDK;
         private ChatView _chatView;
 
-        public MultimodalClientSDK ClientSDK => _clientSDK;
+        public AgentsClientSDK ClientSDK => _clientSDK;
 
         public MainWindow()
         {
@@ -131,7 +131,7 @@ namespace SampleApp
             ShowProgressBar();
             try
             {
-                _clientSDK = await MultimodalClientSDK.CreateAsync(config.ClientSDKProperties());
+                _clientSDK = await AgentsClientSDK.CreateAsync(config.ClientSDKProperties());
 
                 RootContent.Children.Clear();
                 //User control with chat view

@@ -54,7 +54,7 @@
 		<PackageReference Include="System.Configuration.ConfigurationManager" Version="9.0.2" />
 		<PackageReference Include="System.Net.Http" Version="4.3.4" />
 		<PackageReference Include="WebSocketSharp-netstandard" Version="1.0.1" />
-		<PackageReference Include="MultimodalClientSDK" Version="1.0.0" />
+		<PackageReference Include="AgentsClientSDK" Version="1.0.0" />
 	</ItemGroup>
 
 	<ItemGroup>

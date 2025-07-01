@@ -1,7 +1,7 @@
 ﻿using AdaptiveCards.ObjectModel.WinUI3;
 using AdaptiveCards.Rendering.WinUI3;
-using Com.Microsoft.Multimodal.Clientsdk.Services.Protocol;
-using Com.Microsoft.Multimodal.Clientsdk.Utils.Helpers;
+using Com.Microsoft.AgentsClientSDK.Services.Protocol;
+using Com.Microsoft.AgentsClientSDK.Utils.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using System;

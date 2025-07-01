@@ -17,6 +17,34 @@
           "AdaptiveCards.ObjectModel.WinUI3": "1.0.0"
         }
       },
+      "AgentsClientSDK": {
+        "type": "Direct",
+        "requested": "[1.0.0, )",
+        "resolved": "1.0.0",
+        "contentHash": "RSqqLhuZqBwEvCr+DTvNymQpplJG1uEyW1FjeyOfb/m5K7qMzLphvPnUEXsB45j302xcLtJkwuuzHiQ9sPVR8Q==",
+        "dependencies": {
+          "AdaptiveCards.ObjectModel.WinUI3": "2.0.1-beta",
+          "AdaptiveCards.Rendering.WinUI3": "2.2.1-beta",
+          "AdaptiveCards.Templating": "2.0.5",
+          "MSTest.TestFramework": "3.9.0",
+          "Microsoft.Bot.Connector.DirectLine": "3.0.2",
+          "Microsoft.CognitiveServices.Speech": "1.42.0",
+          "Microsoft.CognitiveServices.Speech.Extension.MAS": "1.42.0",
+          "Microsoft.Extensions.Configuration.Binder": "9.0.2",
+          "Microsoft.Extensions.Configuration.EnvironmentVariables": "9.0.2",
+          "Microsoft.Extensions.Configuration.Json": "9.0.2",
+          "Microsoft.Extensions.Hosting": "9.0.2",
+          "Microsoft.Rest.ClientRuntime": "2.3.24",
+          "Microsoft.TestPlatform.TestHost": "17.14.0",
+          "Microsoft.Windows.SDK.BuildTools": "10.0.26100.3916",
+          "Microsoft.WindowsAppSDK": "1.7.250401001",
+          "NAudio": "2.2.1",
+          "Serilog": "4.2.0",
+          "System.Configuration.ConfigurationManager": "9.0.2",
+          "System.Net.Http": "4.3.4",
+          "WebSocketSharp-netstandard": "1.0.1"
+        }
+      },
       "Microsoft.Bot.Connector.DirectLine": {
         "type": "Direct",
         "requested": "[3.0.2, )",
@@ -135,33 +163,6 @@
         "dependencies": {
           "Microsoft.Web.WebView2": "1.0.2903.40",
           "Microsoft.Windows.SDK.BuildTools": "10.0.22621.756"
-        }
-      },
-      "MultimodalClientSDK": {
-        "type": "Direct",
-        "requested": "[1.0.0, )",
-        "resolved": "1.0.0",
-        "contentHash": "7h8d7zmyHLI5928vl5kAPKdzg/ycPbQwgp2RXoBFX6pp6UeOakpJA6FNWSkgHgeb+zEcBoB3e5l7Gi1S2XOEsQ==",
-        "dependencies": {
-          "AdaptiveCards.ObjectModel.WinUI3": "2.0.1-beta",
-          "AdaptiveCards.Rendering.WinUI3": "2.2.1-beta",
-          "AdaptiveCards.Templating": "2.0.5",
-          "MSTest.TestFramework": "3.9.0",
-          "Microsoft.Bot.Connector.DirectLine": "3.0.2",
-          "Microsoft.CognitiveServices.Speech": "1.42.0",
-          "Microsoft.CognitiveServices.Speech.Extension.MAS": "1.42.0",
-          "Microsoft.Extensions.Configuration.Binder": "9.0.2",
-          "Microsoft.Extensions.Configuration.EnvironmentVariables": "9.0.2",
-          "Microsoft.Extensions.Configuration.Json": "9.0.2",
-          "Microsoft.Extensions.Hosting": "9.0.2",
-          "Microsoft.Rest.ClientRuntime": "2.3.24",
-          "Microsoft.TestPlatform.TestHost": "17.14.0",
-          "Microsoft.Windows.SDK.BuildTools": "10.0.26100.3916",
-          "NAudio": "2.2.1",
-          "Serilog": "4.2.0",
-          "System.Configuration.ConfigurationManager": "9.0.2",
-          "System.Net.Http": "4.3.4",
-          "WebSocketSharp-netstandard": "1.0.1"
         }
       },
       "NAudio": {

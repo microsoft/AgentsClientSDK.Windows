@@ -1,78 +1,140 @@
-## AgentsClient SDK
+﻿# 📦 Using `AgentsClientSDK` NuGet Package in a WinUI 3 App
 
-The AgentsClientSDK for Windows is available as a NuGet package and its release repository can be found here.
-This repository contains the source code for the SampleApp, which demonstrates how to use the SDK in a WinUI 3 application.
-
-# SampleApp
-
-SampleApp is a Windows desktop application built with WinUI 3 (.NET 8) that demonstrates how to integrate multimodal conversational AI using the [MultimodalClientSDK]. The app provides a chat interface supporting both text and speech interactions with an AI agent, leveraging Microsoft Cognitive Services and Adaptive Cards for rich, interactive conversations.
-
-## Features
-
-- **Conversational UI**: Chat with an AI agent using text or speech.
-- **Speech Recognition**: Optional speech input/output powered by Microsoft Cognitive Services Speech SDK.
-- **Adaptive Cards**: Rich message rendering using Adaptive Cards for WinUI 3.
-- **Agent Configuration**: Prompt-based configuration for agent schema and environment at first launch.
-- **Persistent Settings**: User configuration is saved locally for future sessions.
-- **Modern Windows Experience**: Built with WinUI 3 and packaged as an MSIX for Windows 10/11.
-
-## Getting Started
-
-### Prerequisites
-
-- Windows 10 version 19041 (20H1) or later
-- [.NET 8 SDK](https://dotnet.microsoft.com/download/dotnet/8.0)
-- Visual Studio 2022 with the **Desktop development with C++** and **.NET Desktop Development** workloads
-
-### Build and Run
-
-1. **Clone the repository** and open `SampleApp.sln` in Visual Studio 2022.
-2. **Restore NuGet packages** (should happen automatically).
-3. **Build the solution**.
-4. **Run the app** (F5 or Ctrl+F5).
-
-### First Launch Configuration
-
-On first launch, you will be prompted to enter:
-
-- **Agent Schema Name**
-- **Environment Name**
-
-These are required to connect to your AI agent backend. The configuration is saved locally in `%LOCALAPPDATA%\SampleApp\config.json`.
-
-### Enabling Speech
-
-To enable speech features, set the `EnableSpeech` property to `true` in the configuration dialog or in the `config.json` file. You will also need to provide valid `SpeechApiKey` and `SpeechRegion` values.
-
-## Project Structure
-
-- `App.xaml.cs` � Application entry point.
-- `main/MainWindow.xaml.cs` � Main window logic, configuration prompts, and chat view loading.
-- `Controls/ChatView.xaml.cs` � Chat UI logic, message handling, and speech integration.
-- `configurations/ConfigManager.cs` � Configuration management and persistence.
-- `Converters/` � UI value converters for chat message rendering.
-
-## Dependencies
-
-- [Microsoft.WindowsAppSDK](https://www.nuget.org/packages/Microsoft.WindowsAppSDK)
-- [AdaptiveCards.ObjectModel.WinUI3](https://www.nuget.org/packages/AdaptiveCards.ObjectModel.WinUI3)
-- [AdaptiveCards.Rendering.WinUI3](https://www.nuget.org/packages/AdaptiveCards.Rendering.WinUI3)
-- [Microsoft.CognitiveServices.Speech](https://www.nuget.org/packages/Microsoft.CognitiveServices.Speech)
-- [Microsoft.Bot.Connector.DirectLine](https://www.nuget.org/packages/Microsoft.Bot.Connector.DirectLine)
-- [MultimodalClientSDK](https://www.nuget.org/packages/MultimodalClientSDK)
-- [NAudio](https://www.nuget.org/packages/NAudio)
-- Other supporting libraries (see `.csproj` for full list)
-
-## Customization
-
-- **Agent Integration**: Update the agent configuration in `config.json` or via the app prompt.
-- **Speech Settings**: Provide your own Azure Speech API key and region.
-- **Branding**: Replace assets in the `Assets/` folder for custom logos and backgrounds.
-
-## License
-
-This project is provided as a sample and is subject to the license terms in the repository.
+This guide shows how to use the `AgentsClientSDK` NuGet package in your **WinUI 3 (.NET 8)** project by downloading it from GitHub Releases and setting it up manually via a local NuGet source.
 
 ---
 
-*For more information on WinUI 3, see [WinUI documentation](https://learn.microsoft.com/windows/apps/winui/). For details on Adaptive Cards, visit [adaptivecards.io](https://adaptivecards.io/).*
+## 🔗 Step 1: Download the NuGet Package
+
+1. Go to the [Releases](https://github.com/microsoft/AgentsClientSDK.Windows/releases) section of this repository.
+2. Download the `.nupkg` file (e.g., `AgentsClientSDK.1.0.0.nupkg`) from the latest release.
+
+---
+
+## 🗂️ Step 2: Create a Local NuGet Package Source
+
+1. Create a folder on your machine to act as a local NuGet feed, e.g.:
+
+```bash
+mkdir C:\LocalNuGet
+```
+
+2. Move the downloaded `.nupkg` file into that folder.
+
+3. Register the folder as a NuGet source:
+
+```bash
+dotnet nuget add source "C:\LocalNuGet" --name LocalGitHubRelease
+```
+
+ℹ️ You only need to do this once per machine.
+
+---
+
+## 🛠️ Step 3: Create or Open Your WinUI 3 App
+
+If you don’t already have a WinUI 3 app, you can create one:
+
+```bash
+dotnet new winui3 -n MyWinUIApp
+cd MyWinUIApp
+```
+
+---
+
+## 📦 Step 4: Add the Package to Your Project
+
+Run this in your project folder:
+
+```bash
+dotnet add package Microsoft.AgentsClientSDK --version 1.0.0
+```
+
+Or use Visual Studio:
+
+- Right-click the project → Manage NuGet Packages
+- Select the `LocalGitHubRelease` source
+- Search for `Microsoft.AgentsClientSDK` and install it
+
+---
+
+## 💬 Step 5: Use the Package in Your Code
+
+Example usage:
+
+```csharp
+using Com.Microsoft.AgentsClientSDK;
+using Com.Microsoft.AgentsClientSDK.Config;
+using Com.Microsoft.AgentsClientSDK.Services;
+
+public sealed partial class MainWindow : Window
+{
+    private AgentsClientSDK _clientSDK;
+
+    public MainWindow()
+    {
+        this.InitializeComponent();
+        InitializeSDK();
+    }
+
+    private async void InitializeSDK()
+    {
+        _clientSDK = new AgentsClientSDK();
+
+        var properties = new ClientSDKProperties
+        {
+            AgentId = "your-agent-id",
+            DirectLineSecret = "your-directline-secret",
+            EnableSpeech = true
+        };
+
+        await _clientSDK.StartConversationAsync(properties);
+    }
+}
+```
+
+---
+
+## 🔧 Advanced Usage
+
+```csharp
+// Speech service integration
+var speechService = ClientSDKServiceFactory.GetSpeechService();
+await speechService.StartListeningAsync();
+
+// Agent event handling
+var eventNotifier = ClientSDKServiceFactory.GetAgentEventNotifierService();
+eventNotifier.OnAgentActivity += (sender, activity) => {
+    Console.WriteLine($"Agent: {activity.Text}");
+};
+
+// Logging integration
+var logger = Com.Microsoft.AgentsClientSDK.Utils.Logger.Instance;
+logger.Information("SDK initialized successfully");
+```
+
+---
+
+## 🔍 Troubleshooting
+
+### Common Issues
+
+- **Package Not Found**: Check that the `.nupkg` file exists and the local source is registered via `dotnet nuget list source`
+- **Build Errors**: Ensure the project targets `.NET 8` and uses `Microsoft.WindowsAppSDK`
+- **Runtime Issues**: Validate DirectLine and Azure credentials
+
+### Debug Configuration
+
+```csharp
+var config = new ClientSDKProperties
+{
+    LogLevel = LogLevel.Debug,
+    EnableConsoleLogging = true
+};
+
+var isConnected = await _clientSDK.TestConnectionAsync();
+if (!isConnected)
+{
+    // Handle connection issues
+}
+```

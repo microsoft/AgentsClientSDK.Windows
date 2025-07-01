@@ -1,10 +1,10 @@
 ﻿using AdaptiveCards.Rendering.WinUI3;
-using Com.Microsoft.Multimodal.Clientsdk;
-using Com.Microsoft.Multimodal.Clientsdk.Models;
-using Com.Microsoft.Multimodal.Clientsdk.Services;
-using Com.Microsoft.Multimodal.Clientsdk.Services.Speech;
-using Com.Microsoft.Multimodal.Clientsdk.Utils;
-using Com.Microsoft.Multimodal.Clientsdk.Utils.Helpers;
+using Com.Microsoft.AgentsClientSDK;
+using Com.Microsoft.AgentsClientSDK.Models;
+using Com.Microsoft.AgentsClientSDK.Services;
+using Com.Microsoft.AgentsClientSDK.Services.Speech;
+using Com.Microsoft.AgentsClientSDK.Utils;
+using Com.Microsoft.AgentsClientSDK.Utils.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;
@@ -35,10 +35,10 @@ namespace SampleApp.Controls
         AdaptiveCardRenderer renderer;
         private readonly string _tokenUrl;
         private bool _isSpeechModeActive = false;
-        private MultimodalClientSDK _clientSDK;
+        private AgentsClientSDK _clientSDK;
         private AgentActivity? _agentWelcomeMessage;
 
-        public ChatView(AppConfig config, MultimodalClientSDK clientSDK, AgentActivity agentWelcomeMessage )
+        public ChatView(AppConfig config, AgentsClientSDK clientSDK, AgentActivity agentWelcomeMessage )
         {
             this.InitializeComponent();
             _tokenUrl = config.AppSettings.GetDirectLineTokenEndpoint();
