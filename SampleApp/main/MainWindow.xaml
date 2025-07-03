@@ -31,7 +31,7 @@
         <StackPanel>
             <!-- Header -->
             <TextBlock
-          Text="👋 Welcome to the Sample App"
+          Text="Welcome to the TextClientApp"
           FontSize="28"
           FontWeight="Bold"
           Foreground="White"
@@ -40,7 +40,7 @@
 
             <!-- Subheader -->
             <TextBlock
-              Text="This app uses the Multimodal client SDK enabling you to explore its diverse fetures through both text and voice interactions."
+              Text="This app uses the AgentsClientSDK, enabling you to explore its multimodal features. "
               FontSize="18"
               Foreground="White" 
               TextAlignment="Center"

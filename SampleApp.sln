@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "MultimodalClientSDK", "Mult
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SampleApp", "SampleApp\SampleApp.csproj", "{7BADA8CB-56E7-9A82-F46F-76EAEB094CA6}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "AgentsClientSDK", "..\AgentsClientSDK.Windows\AgentsClientSDK\AgentsClientSDK.csproj", "{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|ARM64 = Debug|ARM64
@@ -42,6 +44,18 @@ Global
 		{7BADA8CB-56E7-9A82-F46F-76EAEB094CA6}.Release|x64.Build.0 = Release|x64
 		{7BADA8CB-56E7-9A82-F46F-76EAEB094CA6}.Release|x86.ActiveCfg = Release|x86
 		{7BADA8CB-56E7-9A82-F46F-76EAEB094CA6}.Release|x86.Build.0 = Release|x86
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Debug|ARM64.ActiveCfg = Debug|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Debug|ARM64.Build.0 = Debug|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Debug|x64.ActiveCfg = Debug|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Debug|x64.Build.0 = Debug|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Debug|x86.ActiveCfg = Debug|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Debug|x86.Build.0 = Debug|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Release|ARM64.ActiveCfg = Release|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Release|ARM64.Build.0 = Release|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Release|x64.ActiveCfg = Release|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Release|x64.Build.0 = Release|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Release|x86.ActiveCfg = Release|Any CPU
+		{AC879C1C-4CD6-D942-FF61-7104E9D5E0CE}.Release|x86.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

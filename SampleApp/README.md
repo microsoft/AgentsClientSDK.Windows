@@ -28,17 +28,26 @@ SampleApp is a Windows desktop application built with WinUI 3 (.NET 8) that demo
 
 1. **Clone the repository** and open `SampleApp.sln` in Visual Studio 2022.
 2. **Restore NuGet packages** (should happen automatically).
-3. **Build the solution**.
-4. **Run the app** (F5 or Ctrl+F5).
+3. If you are running the app for the first time/using different agent settings, you will need to configure your agent settings. Follow the instructions in the **First Launch Configuration** section below.
+4. **Build the solution**.
+5. **Run the app** (F5 or Ctrl+F5).
 
 ### First Launch Configuration
 
-On first launch, you will be prompted to enter:
+On first launch/ Relaunching the app with different agent settings, you will to update the agent configuration in appsettings.json.
+For Direct Line integration, you will need to provide the following values:
+ 'SchemaName', 'Envirnoment', 'EnvironmentId'.
 
-- **Agent Schema Name**
-- **Environment Name**
+ For SchemaName and Environment, 
+   Firstly you need to publish your agent in No Authentication mode, Settings > Security > Authentication > No Authentication.
+   Then you can get the SchemaName and EnvironmentId from the metaData from Advanced in same page.
 
-These are required to connect to your AI agent backend. The configuration is saved locally in `%LOCALAPPDATA%\SampleApp\config.json`.
+   For EnvironmentId, you can get it from the URL of the agent in the portal.
+   copilotstudio.microsoft.com -> prod
+   copilotstudio.preview.microsoft.com -> prod
+   copilotstudio.preprod.microsoft.com -> preprod
+
+These are required to connect to your AI agent backend. The configuration is saved locally in `SampleApp\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\appsettings.json`.
 
 ### Enabling Speech
 

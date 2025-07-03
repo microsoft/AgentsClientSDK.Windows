@@ -5,6 +5,10 @@ using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SampleApp.Controls;
 using System;
+using System.Configuration;
+using System.IO;
+using System.Security.Policy;
+using System.Text.Json;
 using System.Threading.Tasks;
 
 namespace SampleApp
@@ -28,7 +32,7 @@ namespace SampleApp
             SetRandomBackground();
 
             Current = this;
-            this.Title = "Client SDK Sample App";
+            this.Title = "Welcome to the TextClientApp";
 
             RootContent.Loaded += RootContent_Loaded;
         }
@@ -55,18 +59,39 @@ namespace SampleApp
 
             AppConfig config = ConfigManager.LoadConfig();
 
-            if (config == null
-                || string.IsNullOrWhiteSpace(config.AppSettings.AgentSchemaName)
-                || string.IsNullOrWhiteSpace(config.AppSettings.AgentEnvironmentId))
-            {
-                //var (tokenUrl, enableSpeech) = await AskUserForTokenUrlAsync();
-                bool flowControl = await PromptForAgentConfigAsync(config);
-                if (!flowControl)
-                {
-                    return;
-                }
+            //if (config == null
+            //    || string.IsNullOrWhiteSpace(config.AppSettings.AgentSchemaName)
+            //    || string.IsNullOrWhiteSpace(config.AppSettings.AgentEnvironmentId))
+            //{
+            //var (tokenUrl, enableSpeech) = await AskUserForTokenUrlAsync();
+            //bool flowControl = await PromptForAgentConfigAsync(config);
+            //if (!flowControl)
+            //{
+            //    return;
+            //}
 
-            }
+            //}
+
+            var configPath = Path.Combine(
+             AppDomain.CurrentDomain.BaseDirectory,
+             "appsettings.json"
+             );
+
+            if (!File.Exists(configPath))
+                return;
+
+
+
+            //config = new AppConfig();
+            var json = File.ReadAllText(configPath);
+
+            // Deserialize the JSON into AppConfig
+            var (schema, environmentId) = AppSettingsReader.GetSchemaAndEnvironment(configPath);
+
+
+
+            config.AppSettings.AgentSchemaName = schema;
+            config.AppSettings.AgentEnvironmentId = environmentId;
 
             await LoadChatViewAsync(config);
         }
@@ -179,6 +204,78 @@ namespace SampleApp
             finally
             {
                 HideProgressBar();
+            }
+        }
+
+        public static class AppSettingsReader
+        {
+            public static string ConvertToPowerPlatformUrl(string input, string environment)
+            {
+                if (string.IsNullOrWhiteSpace(input))
+                    return string.Empty;
+
+                string normalized = input.ToLowerInvariant();
+
+                if (environment.Equals("prod", StringComparison.OrdinalIgnoreCase))
+                {
+                    return $"{normalized}.environment.api.powerplatform.com";
+                }
+                else
+                {
+                    return $"{normalized}.environment.api.{environment}.powerplatform.com";
+                }
+            }
+
+            public static string createEnvurl(string? envId, string? envName)
+            {
+                if (string.IsNullOrWhiteSpace(envId))
+                    return string.Empty;
+
+                string cleaned = envId.Replace("-", "");
+
+                if (cleaned.Length <= 2)
+                    return cleaned;
+
+                if (envName == "test" || envName == "preprod")
+                {
+                    string prefix = cleaned.Substring(0, cleaned.Length - 1);
+                    string suffix = cleaned.Substring(cleaned.Length - 1);
+                    return $"{prefix}.{suffix}";
+                }
+                else
+                {
+                    string prefix = cleaned.Substring(0, cleaned.Length - 2);
+                    string suffix = cleaned.Substring(cleaned.Length - 2);
+                    return $"{prefix}.{suffix}";
+                }
+            }
+
+            public static (string? SchemaName, string? EnvironmentId) GetSchemaAndEnvironment(string jsonPath)
+            {
+                var json = File.ReadAllText(jsonPath);
+                using var doc = JsonDocument.Parse(json);
+                var root = doc.RootElement;
+
+                // Try AppSettings path
+                if (root.TryGetProperty("AppSettings", out JsonElement appSettings))
+                {
+                    string? schema = appSettings.GetProperty("AgentSchemaName").GetString();
+                    string? envId = appSettings.GetProperty("AgentEnvironmentId").GetString();
+                    return (schema, envId);
+                }
+
+                // Try user path
+                if (root.TryGetProperty("user", out JsonElement user))
+                {
+                    string? schema = user.GetProperty("schemaName").GetString();
+                    string? envId = user.GetProperty("environmentId").GetString();
+                    string? envName = user.GetProperty("environment").GetString();
+
+                    string url = ConvertToPowerPlatformUrl(createEnvurl(envId, envName), envName);
+                    return (schema, url);
+                }
+
+                return (null, null);
             }
         }
         private async Task<(string AgentSchemaName, string EnvironmentName, bool Confirmed)> AskUserForAgentSchemaAndEnvironmentAsync()
