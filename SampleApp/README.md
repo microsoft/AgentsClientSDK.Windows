@@ -48,7 +48,7 @@ SDK to connect and function correctly. The file should look like this:
       "redirectUri": ""
     }
   },
-  "speech": {               // furure scope. No need to input anything for now
+  "speech": {               // future scope. No need to input anything for now
     "speechSubscriptionKey": "",
     "speechServiceRegion": ""
   }
