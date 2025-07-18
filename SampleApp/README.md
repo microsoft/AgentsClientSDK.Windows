@@ -42,7 +42,7 @@ SDK to connect and function correctly. The file should look like this:
     "schemaName": "", // schema name of agent. Both are available in agent Metadata
     "environment": "", // mapping given below
     "isAuthEnabled": false, // remains false for this release
-    "auth": {               // furure scope. No need to input anything for now
+    "auth": {               // future scope. No need to input anything for now
       "clientId": "",
       "tenantId": "",
       "redirectUri": ""
