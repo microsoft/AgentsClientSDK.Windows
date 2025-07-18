@@ -1,4 +1,5 @@
-﻿using Com.Microsoft.AgentsClientSDK.Models;
+﻿using Microsoft.Agents.Client.Wpf;
+using Microsoft.Agents.Client.Wpf.Models;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Data;
 using System;

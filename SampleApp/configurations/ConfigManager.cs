@@ -1,5 +1,5 @@
-using Com.Microsoft.AgentsClientSDK.Config;
-using Com.Microsoft.AgentsClientSDK.Services.Interfaces;
+using Microsoft.Agents.Client.Wpf.Config;
+using Microsoft.Agents.Client.Wpf.Services.Interfaces;
 using System;
 using System.IO;
 using System.Text.Json;

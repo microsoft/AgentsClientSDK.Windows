@@ -1,6 +1,6 @@
 ﻿using Microsoft.UI.Xaml;
 using System;
-using Logger = Com.Microsoft.AgentsClientSDK.Utils.Logger;
+using Logger = Microsoft.Agents.Client.Wpf.Utils.Logger;
 
 // To learn more about WinUI, the WinUI project structure,
 // and more about our project templates, see: http://aka.ms/winui-project-info.

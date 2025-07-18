@@ -1,10 +1,13 @@
-﻿using Com.Microsoft.AgentsClientSDK;
-using Com.Microsoft.AgentsClientSDK.Models;
+﻿using Microsoft.Agents.Client.Wpf;
+using Microsoft.Agents.Client.Wpf.Exceptions;
+using Microsoft.Agents.Client.Wpf.Models;
+using Microsoft.Agents.Client.Wpf.Utils;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Media.Imaging;
 using SampleApp.Controls;
 using System;
+using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
 using System.Security.Policy;
@@ -19,7 +22,7 @@ namespace SampleApp
         public new static MainWindow Current { get; private set; } = null!;
         private readonly string[] _backgroundImages =
         {
-            "ms-appx:///Assets/Background/Background1.jpg"
+            "ms-appx:///Assets/Background/hotel.jpg"
         };
         private AgentsClientSDK _clientSDK;
         private ChatView _chatView;
@@ -86,12 +89,15 @@ namespace SampleApp
             var json = File.ReadAllText(configPath);
 
             // Deserialize the JSON into AppConfig
-            var (schema, environmentId) = AppSettingsReader.GetSchemaAndEnvironment(configPath);
+            Dictionary<string, string> settings = AppSettingsReader.GetAppSettingsData(configPath);
 
+            if (config == null)
+                config = new AppConfig();
 
-
-            config.AppSettings.AgentSchemaName = schema;
-            config.AppSettings.AgentEnvironmentId = environmentId;
+            config.AppSettings.AgentSchemaName = settings["schema"];
+            config.AppSettings.AgentEnvironmentId = settings["url"];
+            //config.AppSettings.AgentId = settings["environmentId"];
+            config.AppSettings.IsAnonymousAgent = settings["IsAnonymousAgent"] == "0" ? false : true;
 
             await LoadChatViewAsync(config);
         }
@@ -166,14 +172,14 @@ namespace SampleApp
                 _chatView = new ChatView(config, _clientSDK, welcomeMessage);
                 RootContent.Children.Add(_chatView);
             }
-            catch (Exception ex)
+            catch (SDKError ex)
             {
 
                 // Optionally log the exception or show a dialog
                 var dialog = new ContentDialog
                 {
                     Title = "Error",
-                    Content = $"Failed to load chat view: {ex.Message}",
+                    Content = ex.ToLogMessage(),
                     CloseButtonText = "OK",
                     XamlRoot = this.Content.XamlRoot
                 };
@@ -250,32 +256,41 @@ namespace SampleApp
                 }
             }
 
-            public static (string? SchemaName, string? EnvironmentId) GetSchemaAndEnvironment(string jsonPath)
+            public static Dictionary<string, string> GetAppSettingsData(string jsonPath)
             {
                 var json = File.ReadAllText(jsonPath);
                 using var doc = JsonDocument.Parse(json);
                 var root = doc.RootElement;
+                Dictionary<string, string> settings = new Dictionary<string, string>();
 
                 // Try AppSettings path
-                if (root.TryGetProperty("AppSettings", out JsonElement appSettings))
-                {
-                    string? schema = appSettings.GetProperty("AgentSchemaName").GetString();
-                    string? envId = appSettings.GetProperty("AgentEnvironmentId").GetString();
-                    return (schema, envId);
-                }
+                //if (root.TryGetProperty("AppSettings", out JsonElement appSettings))
+                //{
+                //    string schema = appSettings.GetProperty("AgentSchemaName").GetString();
+                //    string envId = appSettings.GetProperty("AgentEnvironmentId").GetString();
+                //    return (schema, envId);
+                //}
 
                 // Try user path
-                if (root.TryGetProperty("user", out JsonElement user))
-                {
-                    string? schema = user.GetProperty("schemaName").GetString();
-                    string? envId = user.GetProperty("environmentId").GetString();
-                    string? envName = user.GetProperty("environment").GetString();
+                
+                    if (root.TryGetProperty("user", out JsonElement user))
+                    {
+                        string schema = user.GetProperty("schemaName").GetString();
+                        string envId = user.GetProperty("environmentId").GetString();
+                        string envName = user.GetProperty("environment").GetString();
+                        bool isAuthEnabled = user.GetProperty("isAuthEnabled").GetBoolean();
 
                     string url = ConvertToPowerPlatformUrl(createEnvurl(envId, envName), envName);
-                    return (schema, url);
+                        settings["schema"] = schema;
+                        settings["environmentId"] = envId;
+                        settings["environment"] = envName;
+                        settings["url"] = url;
+                        settings["IsAnonymousAgent"] = !isAuthEnabled ? 1.ToString() : 0.ToString();
                 }
+                
 
-                return (null, null);
+
+                return settings;
             }
         }
         private async Task<(string AgentSchemaName, string EnvironmentName, bool Confirmed)> AskUserForAgentSchemaAndEnvironmentAsync()

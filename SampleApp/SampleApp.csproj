@@ -106,6 +106,10 @@
 	  <Content Include="Assets\Background\BackgoudImage.png" />
 		<Content Include="Assets\Background\Background1.jpg" />
 	</ItemGroup>
+
+	<ItemGroup>
+	  <ProjectReference Include="..\..\Final\WinDTE8\AgentsClientSDK.Windows\AgentsClientSDK\AgentsClientSDK.csproj" />
+	</ItemGroup>
 	<!--ItemGroup>
     <ProjectReference Include="..\MultimodalClientSDK\MultimodalClientSDK.csproj" />
   </ItemGroup-->
