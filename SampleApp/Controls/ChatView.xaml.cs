@@ -1,10 +1,10 @@
 ﻿using AdaptiveCards.Rendering.WinUI3;
-using Com.Microsoft.AgentsClientSDK;
-using Com.Microsoft.AgentsClientSDK.Models;
-using Com.Microsoft.AgentsClientSDK.Services;
-using Com.Microsoft.AgentsClientSDK.Services.Speech;
-using Com.Microsoft.AgentsClientSDK.Utils;
-using Com.Microsoft.AgentsClientSDK.Utils.Helpers;
+using Microsoft.Agents.Client.Wpf;
+using Microsoft.Agents.Client.Wpf.Models;
+using Microsoft.Agents.Client.Wpf.Services;
+using Microsoft.Agents.Client.Wpf.Services.Speech;
+using Microsoft.Agents.Client.Wpf.Utils;
+using Microsoft.Agents.Client.Wpf.Utils.Helpers;
 using Microsoft.UI.Xaml;
 using Microsoft.UI.Xaml.Controls;
 using Microsoft.UI.Xaml.Input;

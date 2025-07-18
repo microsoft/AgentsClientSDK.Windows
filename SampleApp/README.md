@@ -34,18 +34,31 @@ SampleApp is a Windows desktop application built with WinUI 3 (.NET 8) that demo
 
 ### First Launch Configuration
 
-On first launch/ Relaunching the app with different agent settings, you will to update the agent configuration in appsettings.json.
-For Direct Line integration, you will need to provide the following values:
- 'SchemaName', 'Envirnoment', 'EnvironmentId'.
-
- For SchemaName and Environment, 
-   Firstly you need to publish your agent in No Authentication mode, Settings > Security > Authentication > No Authentication.
-   Then you can get the SchemaName and EnvironmentId from the metaData from Advanced in same page.
-
-   For EnvironmentId, you can get it from the URL of the agent in the portal.
-   copilotstudio.microsoft.com -> prod
-   copilotstudio.preview.microsoft.com -> prod
-   copilotstudio.preprod.microsoft.com -> preprod
+The appsettings.json  file provides the necessary environment, agent, and speech settings required by the
+SDK to connect and function correctly. The file should look like this:
+{
+  "user": {
+    "environmentId": "", //environment in which agent is created
+    "schemaName": "", // schema name of agent. Both are available in agent Metadata
+    "environment": "", // mapping given below
+    "isAuthEnabled": false, // remains false for this release
+    "auth": {               // furure scope. No need to input anything for now
+      "clientId": "",
+      "tenantId": "",
+      "redirectUri": ""
+    }
+  },
+  "speech": {               // furure scope. No need to input anything for now
+    "speechSubscriptionKey": "",
+    "speechServiceRegion": ""
+  }
+}
+ 
+Environment mapping:
+ 
+copilotstudio.microsoft.com -> prod
+copilotstudio.preview.microsoft.com -> prod
+copilotstudio.preprod.microsoft.com -> preprod
 
 These are required to connect to your AI agent backend. The configuration is saved locally in `SampleApp\bin\x64\Debug\net8.0-windows10.0.19041.0\win-x64\appsettings.json`.
 

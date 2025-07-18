@@ -3,7 +3,7 @@
     xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"  
     xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"  
     xmlns:controls="using:Microsoft.UI.Xaml.Controls"  
-    xmlns:models="using:Com.Microsoft.AgentsClientSDK.Models"  
+    xmlns:models="using:Microsoft.Agents.Client.Wpf"  
     xmlns:local="using:SampleApp" xmlns:local1="using:SampleApp.Controls">  
 
     <Grid x:Name="ChatInterface"  
