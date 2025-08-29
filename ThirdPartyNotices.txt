@@ -1,0 +1,134 @@
+NOTICES AND INFORMATION
+Do Not Translate or Localize
+
+This software incorporates material from third parties. Microsoft makes certain
+open source code available at https://3rdpartysource.microsoft.com, or you may
+send a check or money order for US $5.00, including the product name, the open
+source component name, and version number, to:
+
+Source Code Compliance Team
+Microsoft Corporation
+One Microsoft Way
+Redmond, WA 98052
+USA
+
+Notwithstanding any other terms, you may reverse engineer this software to the
+extent required to debug changes to any libraries licensed under the GNU Lesser.
+
+# iOS AgentsClients SDK's Third-Party Libraries and Licenses
+
+1.  **Adaptive Cards**
+
+    - **Library**: `Adaptive Cards`
+    - **License**: MIT
+    - **Source**: MIT(https://github.com/microsoft/AdaptiveCards/blob/main)
+    - **License Full Text**: [Url: https://github.com/microsoft/AdaptiveCards/blob/main/LICENSE]
+
+    MIT License
+
+    A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+    https://mit-license.org/
+
+# =============================================================================================
+
+2.  **Azure Cognitive Services**
+    - **Library**: `Azure Cognitive Services Speech SDK`
+    - **License**: Proprieraty
+    - **Source**: Closed Source
+
+# =============================================================================================
+
+3.  **Microsoft Authentication Library**
+
+    - **Library**: `Microsoft Authentication Library`
+    - **License**: MIT
+    - **Source**: Source(https://github.com/AzureAD/microsoft-authentication-library-for-dotnet)
+    - **License Full Text**: [Url:https://github.com/AzureAD/microsoft-authentication-library-for-dotnet/blob/main/LICENSE]
+
+    MIT License
+
+    A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+    https://mit-license.org/
+
+
+# =============================================================================================
+
+4. Windows App SDK
+
+ - **Library**: `Microsoft Authentication Library`
+    - **License**: MIT
+    - **Source**: Source(https://github.com/microsoft/WindowsAppSDK)
+    - **License Full Text**: [Url:https://github.com/microsoft/WindowsAppSDK/blob/main/LICENSE]
+
+    MIT License
+
+    A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+    https://mit-license.org/
+
+
+# =============================================================================================
+
+5. Dotnet Extensions
+
+ - **Library**: `Extensions`
+    - **License**: MIT
+    - **Source**: Source(https://github.com/dotnet/extensions)
+    - **License Full Text**: [Url:https://github.com/dotnet/extensions/blob/main/LICENSE]
+
+    MIT License
+
+    A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+    https://mit-license.org/
+
+# =============================================================================================
+
+6. Testfx
+
+ - **Library**: `testfx`
+    - **License**: MIT
+    - **Source**: Source(https://github.com/microsoft/testfx)
+    - **License Full Text**: [Url:https://github.com/microsoft/testfx/blob/main/LICENSE]
+
+    MIT License
+
+    A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+    https://mit-license.org/
+
+# =============================================================================================
+
+7. Serilog
+
+ - **Library**: `serilog`
+    - **License**: MIT
+    - **Source**: Source(https://github.com/serilog/serilog)
+    - **License Full Text**: [Url:https://github.com/serilog/serilog/blob/dev/LICENSE]
+
+    Apache License
+
+    Version 2.0, January 2004
+    http://www.apache.org/licenses/
+
+# =============================================================================================
+
+8. vstest
+
+    - **Library**: `vstest`
+    - **License**: MIT
+    - **Source**: Source(https://github.com/microsoft/vstest)
+    - **License Full Text**: [Url:https://github.com/microsoft/vstest/blob/main/LICENSE]
+
+
+    MIT License
+
+    A short and simple permissive license with conditions only requiring preservation of copyright and license notices. Licensed works, modifications, and larger works may be distributed under different terms and without source code.
+
+    https://mit-license.org/
+
+
+
+
