@@ -15,7 +15,7 @@ USA
 Notwithstanding any other terms, you may reverse engineer this software to the
 extent required to debug changes to any libraries licensed under the GNU Lesser.
 
-# iOS AgentsClients SDK's Third-Party Libraries and Licenses
+# Windows AgentsClients SDK's Third-Party Libraries and Licenses
 
 1.  **Adaptive Cards**
 
